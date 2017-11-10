@@ -61,25 +61,44 @@ knn.fit(iris.data[:,:2],iris.target)
 
 print(knn)
 
-X = iris.data[:, :4]  # All four features
-y = iris.target
+X_sepal = iris.data[:, :2]  # Sepal
+y_sepal = iris.target
 
-x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
-y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+X_petal = iris.data[:, 2:4] # Petal
+y_petal = iris.target
 
-plt.figure(2, figsize=(8, 6))
+#For Sepal
+x_min, x_max = X_sepal[:, 0].min() - 1, X_sepal[:, 0].max() + 1
+y_min, y_max = X_sepal[:, 1].min() - 1, X_sepal[:, 1].max() + 1
+
+#For Petal
+xp_min, xp_max = X_petal[:, 0].min() - 1, X_petal[:, 0].max() + 1
+yp_min, yp_max = X_petal[:, 1].min() - 1, X_petal[:, 1].max() + 1
+
+sepal = plt.figure(1, figsize=(8, 6))
+plt.clf()
+
+# Plot the training points for Sepal
+plt.scatter(X_sepal[:, 0], X_sepal[:, 1], c=y_sepal, cmap=plt.cm.Set1,
+            edgecolor='k')
+plt.xlabel('Sepal length')
+plt.ylabel('Sepal width')
+plt.xlim(x_min, x_max)
+plt.ylim(y_min, y_max)
+plt.xticks(())
+plt.yticks(())
+
+# Plot the training points for Petal
+petal = plt.figure(2, figsize=(8, 6))
 plt.clf()
 
 # Plot the training points
-plt.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.Set1,
+plt.scatter(X_petal[:, 0], X_petal[:, 1], c=y_petal, cmap=plt.cm.Set1,
             edgecolor='k')
-plt.scatter(X[:, 2], X[:, 3], c=y, cmap=plt.cm.Set1,
-            edgecolor='m')
-plt.xlabel('Sepal length')
-plt.ylabel('Sepal width')
-
-plt.xlim(x_min, x_max)
-plt.ylim(y_min, y_max)
+plt.xlabel('Petal length')
+plt.ylabel('Petal width')
+plt.xlim(xp_min, xp_max)
+plt.ylim(yp_min, yp_max)
 plt.xticks(())
 plt.yticks(())
 
