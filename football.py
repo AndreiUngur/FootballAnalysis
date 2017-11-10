@@ -1,6 +1,10 @@
 import pandas as pd 
 import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.datasets import load_iris
+from sklearn import neighbors
 
 '''
 gl = pd.read_csv('game_logs.csv')
@@ -43,3 +47,40 @@ features = list(df2.columns[:4])
 
 dt = DecisionTreeClassifier(min_samples_split=20,random_state=99)
 dt.fit(df2[features],df2["Target"])
+
+iris = load_iris()
+
+print(dt.predict_proba(iris.data[:1,:]))
+
+clf = DecisionTreeRegressor()
+clf = clf.fit(df2[features],df2["Target"])
+print(clf.predict([[1,1,1,1]]))
+
+knn = neighbors.KNeighborsClassifier()
+knn.fit(iris.data[:,:2],iris.target)
+
+print(knn)
+
+X = iris.data[:, :4]  # All four features
+y = iris.target
+
+x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+
+plt.figure(2, figsize=(8, 6))
+plt.clf()
+
+# Plot the training points
+plt.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.Set1,
+            edgecolor='k')
+plt.scatter(X[:, 2], X[:, 3], c=y, cmap=plt.cm.Set1,
+            edgecolor='m')
+plt.xlabel('Sepal length')
+plt.ylabel('Sepal width')
+
+plt.xlim(x_min, x_max)
+plt.ylim(y_min, y_max)
+plt.xticks(())
+plt.yticks(())
+
+plt.show()
