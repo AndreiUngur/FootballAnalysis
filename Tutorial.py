@@ -1,6 +1,7 @@
 import pandas as pd 
 import numpy as np
 import matplotlib.pyplot as plt
+from collections import Counter
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.cross_validation import train_test_split
@@ -102,19 +103,19 @@ createScatter(X_sepal[:,0], X_sepal[:,1], 1, y_sepal, "Sepal Length", "Sepal Wid
 createScatter(X_petal[:,0], X_petal[:,1], 2, y_petal, "Petal Length", "Petal Width")
 
 # split into train and test
-X_train, X_test, y_train, y_test = train_test_split(df2.ix[:,:4], df2["Target"], test_size=0.33, random_state=42)
+X_train, X_test, Y_train, Y_test = train_test_split(df2.ix[:,:4], df2["Target"], test_size=0.33, random_state=42)
 
 # instantiate learning model (k = 3)
 knn = KNeighborsClassifier(n_neighbors=3)
 
 # fitting the model
-knn.fit(X_train, y_train)
+knn.fit(X_train, Y_train)
 
 # predict the response
 pred = knn.predict(X_test)
 
 # evaluate accuracy
-print(accuracy_score(y_test, pred))
+print(accuracy_score(Y_test, pred))
 
 # CROSS VALIDATION TO AVOID OVERFITTING
 
@@ -130,7 +131,7 @@ cv_scores = []
 # perform 10-fold cross validation
 for k in neighbors:
     knn = KNeighborsClassifier(n_neighbors=k)
-    scores = cross_val_score(knn, X_train, y_train, cv=10, scoring='accuracy')
+    scores = cross_val_score(knn, X_train, Y_train, cv=10, scoring='accuracy')
     cv_scores.append(scores.mean())
 
 MSE = [1 - x for x in cv_scores]
@@ -144,3 +145,51 @@ createPlot(neighbors, MSE, "Number of neighbours K", "Misclassification Error",3
 createPlot(neighbors, cv_scores, "Number of neighbours K", "Classification Score",4)
 
 #plt.show()
+
+'''
+KNN IMPLEMENTATION FROM SCRATCH
+'''
+
+# Training Block : Takes as input DATA (x) and TARGET (y) to output a LEARNED MODEL (h)
+# Predict Block : Takes as input new and unseen observations, uses the LEARNED MODEL to give responses
+
+#Training block memorizes training data
+def train(x_train, y_train):
+    return
+
+#Predict block finds the distances between the points and outputs the K points closest to x_test 
+def predict(x_train, x_test, y_train, k):
+    distances = []
+    targets = []
+    
+    for i in range(len(x_train)):
+        distance = np.sqrt(np.sum(np.square(x_test - x_train[i, :])))
+        distances.append([distance,i])
+
+    distances = sorted(distances)
+
+    for i in range(k):
+        index = distances[i][1]
+        targets.append(y_train[index])
+
+    return Counter(targets).most_common(1)[0][0]
+    
+#Test out prediction function
+predict(X_train.as_matrix(), X_test.as_matrix(), Y_train.as_matrix(), 3)
+
+#KNN main function, uses training block and finds the predictions for the points in x_test
+def kNearestNeighbor(x_train, x_test, y_train, predictions, k):
+    if k > len(X_train):
+		raise ValueError
+
+    train(x_train, y_train)
+
+    for i in range(len(x_test)):
+        predictions.append(predict(x_train, x_test[i, :], y_train, k))
+
+predictions = []
+#Test with k = 7
+kNearestNeighbor(X_train.as_matrix(), X_test.as_matrix(), Y_train.as_matrix(), predictions, 7)
+predictions = np.asarray(predictions)
+accuracy = accuracy_score(Y_test.as_matrix(), predictions)
+print(accuracy)
