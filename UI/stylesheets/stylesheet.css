@@ -1,0 +1,8 @@
+#form, #response{
+    padding-top:5vh;
+    padding-bottom:5vh;
+}
+
+th {
+    text-align:center !important
+}

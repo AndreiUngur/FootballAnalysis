@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html data-ng-app="andrei_page">
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="http://www.iconj.com/ico/d/z/dzwucinopk.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="./stylesheets/stylesheet.css" media="screen">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Could be useful later -->
+    <!--
+        <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+        <link href="https://fonts.googleapis.com/css?family=Unica+One|Vollkorn" rel="stylesheet">
+    -->
+    <title>Football Recommender</title>
+</head>
+
+<body>
+    <div id="main" class="container-fluid">
+        <div class="row">
+            <div id="form" class="text-center col-md-5">
+                <form id="favorites_form">
+                    Team:<br>
+                    <input type="text" name="team_a" value="JAX">
+                    <br><br>
+                    Other Team:<br>
+                    <input type="text" name="team_b" value="DEN">
+                    <br><br>
+                    <input type="submit" value="Submit" onclick="compare_teams(this.form)">
+                </form>
+                <br><br>
+            </div>
+            <div id="response" class="text-center col-md-5">
+                <p id="points"></p>
+                <p id="yards_passing"></p>
+                <p id="rushing_yards"></p>
+                <p id="yards_overall"></p>
+            </div>
+        </div>
+        <div id="table" class="text-center">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Acronym</th>
+                        <th>Team Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ARI</td>
+                        <td>Arizona Cardinals</td>
+                    </tr>
+                    <tr>
+                        <td>ATL</td>
+                        <td>Atlanta Falcons</td>
+                    </tr>
+                    <tr>
+                        <td>BAL</td>
+                        <td>Baltimore Ravens</td>
+                    </tr>
+                    <tr>
+                        <td>BUF</td>
+                        <td>Buffalo Bills</td>
+                    </tr>
+                    <tr>
+                        <td>CAR</td>
+                        <td>Carolina Panthers</td>
+                    </tr>
+                    <tr>
+                        <td>CHI</td>
+                        <td>Chicago Bears</td>
+                    </tr>
+                    <tr>
+                        <td>CIN</td>
+                        <td>Cincinnati Bengals</td>
+                    </tr>
+                    <tr>
+                        <td>CLE</td>
+                        <td>Cleveland Browns</td>
+                    </tr>
+                    <tr>
+                        <td>DAL</td>
+                        <td>Dallas Cowboys</td>
+                    </tr>
+                    <tr>
+                        <td>DEN</td>
+                        <td>Denver Broncos</td>
+                    </tr>
+                    <tr>
+                        <td>DET</td>
+                        <td>Detroit Lions</td>
+                    </tr>
+                    <tr>
+                        <td>GB</td>
+                        <td>Green Bay Packers</td>
+                    </tr>
+                    <tr>
+                        <td>HOU</td>
+                        <td>Houston Texans</td>
+                    </tr>
+                    <tr>
+                        <td>IND</td>
+                        <td>Indianapolis Colts</td>
+                    </tr>
+                    <tr>
+                        <td>JAX</td>
+                        <td>Jacksonville Jaguars</td>
+                    </tr>
+                    <tr>
+                        <td>KC</td>
+                        <td>Kansas City Chiefs</td>
+                    </tr>
+                    <tr>
+                        <td>LAC</td>
+                        <td>Los Angeles Chargers</td>
+                    </tr>
+                    <tr>
+                        <td>LA</td>
+                        <td>Los Angeles Rams</td>
+                    </tr>
+                    <tr>
+                        <td>MIA</td>
+                        <td>Miami Dolphins</td>
+                    </tr>
+                    <tr>
+                        <td>MIN</td>
+                        <td>Minnesota Vikings</td>
+                    </tr>
+                    <tr>
+                        <td>NE</td>
+                        <td>New England Patriots</td>
+                    </tr>
+                    <tr>
+                        <td>NO</td>
+                        <td>New Orleans Saints</td>
+                    </tr>
+                    <tr>
+                        <td>NYG</td>
+                        <td>New York Giants</td>
+                    </tr>
+                    <tr>
+                        <td>NYJ</td>
+                        <td>New York Jets</td>
+                    </tr>
+                    <tr>
+                        <td>OAK</td>
+                        <td>Oakland Raiders</td>
+                    </tr>
+                    <tr>
+                        <td>PHI</td>
+                        <td>Philadelphia Eagles</td>
+                    </tr>
+                    <tr>
+                        <td>PIT</td>
+                        <td>Pittsburgh Steelers</td>
+                    </tr>
+                    <tr>
+                        <td>SF</td>
+                        <td>San Francisco 49ers</td>
+                    </tr>
+                    <tr>
+                        <td>SEA</td>
+                        <td>Seattle Seahawks</td>
+                    </tr>
+                    <tr>
+                        <td>TB</td>
+                        <td>Tampa Bay Buccaneers</td>
+                    </tr>
+                    <tr>
+                        <td>TEN</td>
+                        <td>Tennessee Titans</td>
+                    </tr>
+                    <tr>
+                        <td>WAS</td>
+                        <td>Washington Redskins</td>
+                    </tr>
+            </table>
+        </div>
+    </div>
+
+    <script src="scripts/controller.js"></script>
+</body>
+
+</html>

@@ -6,7 +6,7 @@ import os
 import data_analysis as da
 
 #ENV variable
-localhost=False
+localhost=True
 fields = ['team_name','points','yards','pass_yards','rush_yards']
 
 conn = sqlalchemy.create_engine('sqlite:///football_stats.db')
@@ -57,6 +57,13 @@ def read_log():
 @app.route('/status')
 def status():
     return 'Ok!'
+
+@app.after_request
+def after_request(response):
+  response.headers.add('Access-Control-Allow-Origin', '*')
+  response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+  response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+  return response
 
 if __name__ == '__main__':
     if(localhost):
