@@ -14,7 +14,8 @@ function compare_teams(form){
         var points = data.points_coords;
         var rush = data.rush_coords;
         var yards = data.yards_coords;
-
+        $("#team_name_A").text(team_a);
+        $("#team_name_B").text(team_b);
         analyze_numbers(team_a, team_b, "points",points);
         analyze_numbers(team_a, team_b, "yards_passing",pass);
         analyze_numbers(team_a, team_b, "rushing_yards",rush);
@@ -22,24 +23,36 @@ function compare_teams(form){
         
     });
 }
-
+const less_good_def = "Less good defensively";
+const less_good_of = "Less good offensively";
+const good_def = "Better defensively";
+const good_of = "Better offensively";
+const equal = "The two teams are equal";
 function analyze_numbers(team_a, team_b, stat_name, data){
-    var output_string = "";
+    var output_string_A = "";
+    var output_string_B = "";
     if(data[0] < 0){
-        output_string += team_a+" allows less "+stat_name+" than "+team_b+". ";
+        output_string_B += less_good_def+". ";
+        output_string_A += good_def+". ";
     } else if(data[0] > 0) {
-        output_string += team_a+" allows more "+stat_name+" than "+team_b+". ";    
+        output_string_A += less_good_def+". ";
+        output_string_B += good_def+". ";  
     } else{
-       output_string += team_a+" allows as many "+stat_name+" as "+team_b+". ";
+        output_string_A += equal+". ";
+        output_string_B += equal+". ";
     }
 
     if(data[1] < 0){
-        output_string += team_a+" gains less "+stat_name+" than "+team_b+". ";
+        output_string_B += good_of+". ";
+        output_string_A += less_good_of+". ";
     } else if(data[1] > 0) {
-        output_string += team_a+" gains more "+stat_name+" than "+team_b+". ";    
+        output_string_A += good_of+". ";
+        output_string_B += less_good_of+". ";
     } else{
-       output_string += team_a+" gains as many "+stat_name+" as "+team_b+". ";
-    }
-    var obj = $("#"+stat_name).text(output_string+"\nraw data: "+data);
-    obj.html(obj.html().replace(/\n/g,'<br/>'));
+        output_string_B += equal+". ";
+        output_string_A += equal+". ";
+     }
+    $("#"+stat_name+"_A").text(output_string_A);
+    $("#"+stat_name+"_B").text(output_string_B);
+    $("#"+stat_name).text("Raw Data: "+data);
 }
