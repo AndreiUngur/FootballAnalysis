@@ -1,4 +1,5 @@
-const uri = "http://localhost:5000/";
+//const uri = "http://localhost:5000/";
+const uri = "http://footballanalysis.herokuapp.com/";
 const today = new Date();
 const ms_in_day = 1000*60*60*24;
 var user_history;
