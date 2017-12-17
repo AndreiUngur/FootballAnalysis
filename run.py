@@ -35,6 +35,22 @@ def sqlify():
 def get_stats(a,b):
     return jsonify(da.stats(a,b))
 
+@app.route('/max_difference/<stat>')
+def get_max_difference(stat):
+    if stat not in fields:
+        return {"error":"Couldn't query database - invalid stat."}
+
+    max_offense = conn.execute(text("select max("+stat+") from offense")).fetchone()[0]
+    min_offense = conn.execute(text("select min("+stat+") from offense")).fetchone()[0]
+
+    max_defense = conn.execute(text("select max("+stat+") from defense")).fetchone()[0]
+    min_defense = conn.execute(text("select min("+stat+") from defense")).fetchone()[0]
+
+    output = {}
+    output["offense"] = max_offense-min_offense
+    output["defense"] = max_defense-min_defense
+    return jsonify(output)
+
 @app.route('/stats/<team>')
 def get_team_stats(team):
     output = {}

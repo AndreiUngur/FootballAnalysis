@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="http://www.iconj.com/ico/d/z/dzwucinopk.ico" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="./stylesheets/stylesheet.css" media="screen">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Could be useful later -->
     <!--
@@ -19,20 +20,30 @@
 
 <body>
     <div id="main" class="container-fluid">
+        <div id="help" class="row text-center">
+            <div class = "col-md-4">
+                <p>Enter the teams you want to compare</p>    
+            </div>
+            <div class = "col-md-4">
+                <p>View comparison</p>
+            </div>
+            <div class = "col-md-4">
+                <p>View degree of difference between team stats</p>
+            </div>
+        </div>
         <div class="row">
-            <div id="form" class="text-center col-md-5">
+            <div id="form" class="text-center col-md-4">
                 <form id="favorites_form">
                     Team:<br>
                     <input type="text" name="team_a" value="JAX">
-                    <br><br>
-                    Other Team:<br>
+                    <br><br> Other Team:<br>
                     <input type="text" name="team_b" value="DEN">
                     <br><br>
                     <input type="submit" value="Submit" onclick="compare_teams(this.form)">
                 </form>
                 <br><br>
             </div>
-            <div id="response" class="text-center col-md-5">
+            <div id="response" class="text-center col-md-4">
                 <table class="table">
                     <thead>
                         <tr>
@@ -45,25 +56,112 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><p id="team_name_A"></p></td>
-                            <td><p id="points_A"></p></td>
-                            <td><p id="yards_passing_A"></p></td>
-                            <td><p id="rushing_yards_A"></p></td>
-                            <td><p id="yards_overall_A"></p></td>
+                            <td>
+                                <p id="team_name_A"></p>
+                            </td>
+                            <td>
+                                <p id="points_A"></p>
+                            </td>
+                            <td>
+                                <p id="yards_passing_A"></p>
+                            </td>
+                            <td>
+                                <p id="rushing_yards_A"></p>
+                            </td>
+                            <td>
+                                <p id="yards_overall_A"></p>
+                            </td>
                         </tr>
                         <tr>
-                            <td><p id="team_name_B"></p></td>
-                            <td><p id="points_B"></p></td>
-                            <td><p id="yards_passing_B"></p></td>
-                            <td><p id="rushing_yards_B"></p></td>
-                            <td><p id="yards_overall_B"></p></td>
+                            <td>
+                                <p id="team_name_B"></p>
+                            </td>
+                            <td>
+                                <p id="points_B"></p>
+                            </td>
+                            <td>
+                                <p id="yards_passing_B"></p>
+                            </td>
+                            <td>
+                                <p id="rushing_yards_B"></p>
+                            </td>
+                            <td>
+                                <p id="yards_overall_B"></p>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
-                <p id="points"></p>
-                <p id="yards_passing"></p>
-                <p id="rushing_yards"></p>
-                <p id="yards_overall"></p>
+            </div>
+            <div id="raw" class="text-center col-md-4">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Stat Comparison</th>
+                            <th>Points</th>
+                            <th>Passing Yards</th>
+                            <th>Rushing Yards</th>
+                            <th>Overall Yards</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>Difference Offensively</p>
+                            </td>
+                            <td>
+                                <div class="progress">
+                                    <div id="bar_points_o" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">%</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="progress">
+                                    <div id="bar_yards_passing_o" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                                        style="width:0%">%</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="progress">
+                                    <div id="bar_rushing_yards_o" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                                        style="width:0%">%</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="progress">
+                                    <div id="bar_yards_overall_o" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                                        style="width:0%">%</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Difference Defensively</p>
+                            </td>
+                            <td>
+                                <div class="progress">
+                                    <div id="bar_points_d" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">%</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="progress">
+                                    <div id="bar_yards_passing_d" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                                        style="width:0%">%</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="progress">
+                                    <div id="bar_rushing_yards_d" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                                        style="width:0%">%</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="progress">
+                                    <div id="bar_yards_overall_d" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                                        style="width:0%">%</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         <div id="table" class="text-center">

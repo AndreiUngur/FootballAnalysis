@@ -1,6 +1,20 @@
-#form, #response{
-    padding-top:5vh;
+#form{
+    padding-top:10vh;
     padding-bottom:5vh;
+}
+
+#help{
+    margin-top:5vh;
+}
+
+#raw{
+    padding-top:15vh;
+    padding-bottom:5vh;
+}
+
+#response{
+    padding-top:5vh;
+    padding-bottom:5vh
 }
 
 th {
