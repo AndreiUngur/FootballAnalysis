@@ -6,7 +6,7 @@ import os
 import data_analysis as da
 
 #ENV variable
-localhost=True
+localhost=False
 fields = ['team_name','points','yards','pass_yards','rush_yards']
 
 conn = sqlalchemy.create_engine('sqlite:///football_stats.db')
