@@ -7,6 +7,10 @@
     margin-top:5vh;
 }
 
+.progress-bar{
+    color:black !important;
+}
+
 #raw{
     padding-top:15vh;
     padding-bottom:5vh;
